@@ -1,85 +1,54 @@
-<script setup>
-import { RouterLink, RouterView } from 'vue-router'
-import HelloWorld from './components/HelloWorld.vue'
-</script>
-
 <template>
-  <header>
-    <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" />
-
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
-
-      <nav>
-        <RouterLink to="/" class="font-bold underline">Home</RouterLink>
-        <RouterLink to="/about" class="font-bold underline">About</RouterLink>
-      </nav>
+  <div
+    class="bg-[url('@/assets/imgs/bg.jpg')] bg-cover bg-center h-screen text-white p-5 flex overflow-hidden"
+  >
+    <div class="flex-1 mr-5 bg-opacity-50 bg-slate-800 p-3 flex flex-col">
+      <!-- 横向柱状图 -->
+      <HorizontalBar class="h-1/3 box-border pb-4" />
+      <!-- 雷达图 -->
+      <RadarBar class="h-1/3 box-border pb-4" />
+      <!-- 数据传递关系图 -->
+      <Relation class="h-1/3" />
     </div>
-  </header>
-
-  <RouterView />
+    <div class="w-1/2 mr-5 flex flex-col">
+      <!-- 数据展示图 -->
+      <TotalData class="bg-opacity-50 bg-slate-800 p-3" />
+      <!-- 地图可视化 -->
+      <MapChart class="bg-opacity-50 bg-slate-800 p-3 mt-4 flex-1" />
+    </div>
+    <div class="flex-1 bg-opacity-50 bg-slate-800 p-3 flex flex-col">
+      <!-- 竖向柱状图 -->
+      <VerticalBar class="h-1/3 box-border pb-4" />
+      <!-- 环形资源站比图 -->
+      <RadiueBar class="h-1/3 box-border pb-4" />
+      <!-- 文档云图 -->
+      <WordCloud class="h-1/3 box-border" />
+    </div>
+  </div>
 </template>
 
-<style scoped>
-header {
-  line-height: 1.5;
-  max-height: 100vh;
+<script setup>
+import HorizontalBar from './components/HorizontalBar.vue'
+import RadarBar from './components/RadarBar.vue'
+import Relation from './components/Relation.vue'
+import TotalData from './components/TotalData.vue'
+import MapChart from './components/MapChart.vue'
+import VerticalBar from './components/VerticalBar.vue'
+import RadiueBar from './components/RadiueBar.vue'
+import WordCloud from './components/WordCloud.vue'
+import { ref } from 'vue'
+import { getVisualization } from '@/api/visualization.js'
+
+const data = ref(null)
+
+const loadData = async () => {
+	data.value = await getVisualization()
+	console.log(data.value)
 }
+loadData()
 
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
-}
+setInterval(() => {
+	loadData()
+}, 3000)
 
-nav {
-  width: 100%;
-  font-size: 12px;
-  text-align: center;
-  margin-top: 2rem;
-}
-
-nav a.router-link-exact-active {
-  color: var(--color-text);
-}
-
-nav a.router-link-exact-active:hover {
-  background-color: transparent;
-}
-
-nav a {
-  display: inline-block;
-  padding: 0 1rem;
-  border-left: 1px solid var(--color-border);
-}
-
-nav a:first-of-type {
-  border: 0;
-}
-
-@media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
-  }
-
-  .logo {
-    margin: 0 2rem 0 0;
-  }
-
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
-
-  nav {
-    text-align: left;
-    margin-left: -1rem;
-    font-size: 1rem;
-
-    padding: 1rem 0;
-    margin-top: 1rem;
-  }
-}
-</style>
+</script>
