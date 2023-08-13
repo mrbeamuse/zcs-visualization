@@ -8,7 +8,7 @@
 <script setup>
 import { onMounted, ref, watch } from 'vue'
 import * as echarts from 'echarts'
-// 不要忘记从父组件传递数据
+
 const props = defineProps({
   data: {
     type: Object,
@@ -78,7 +78,23 @@ const renderChart = () => {
       // 坐标轴分割间隔
       interval: 5,
       // 刻度增长逆时针
-      clockwise: false
+      clockwise: false,
+      // 不显示坐标轴刻度
+      axisTick: {
+        show: false
+      },
+      // 不显示坐标轴文字
+      axisLabel: {
+        show: false
+      },
+      // 不显示坐标轴线
+      axisLine: {
+        show: false
+      },
+      // 不显示分割线
+      splitLine: {
+        show: false
+      }
     },
     // 径向轴
     radiusAxis: {
