@@ -6,6 +6,7 @@
   src: url('@/assets/fonts/FX-LED.ttf') format('truetype');
 }
 
+/* 文字渐变 */
 .text-gradient {
   /* 背景渐变 */
   background-image: linear-gradient(to bottom, #e5e4ea, #5EA8F2);
